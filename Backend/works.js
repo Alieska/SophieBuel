@@ -2,6 +2,9 @@
 
 const reponse = await fetch ("http://localhost:5678/api/works") 
 let worksArchitect = await reponse.json ()
+console.log (worksArchitect)
+
+//Générer travaux sur page d'accueil depuis serveur
 
 function genererWorks(worksArchitect) {
 	for (let i = 0; i < worksArchitect.length; i++) {
@@ -27,3 +30,47 @@ function genererWorks(worksArchitect) {
 }
 
 genererWorks(worksArchitect);
+
+//Filtre Objets
+
+const filtreObjets = document.querySelector(".filtreObjets");
+
+filtreObjets.addEventListener("click",function(){
+	const worksObjets = worksArchitect.filter(function (work){
+		return work.categoryId === 1;
+	});
+	document.querySelector(".gallery").innerHTML = "";
+	genererWorks(worksObjets);
+});
+
+//Filtre Appartements
+
+const filtreAppart = document.querySelector(".filtreAppart");
+
+filtreAppart.addEventListener("click",function(){
+	const worksAppart = worksArchitect.filter(function (work){
+		return work.categoryId === 2;
+	});
+	document.querySelector(".gallery").innerHTML = "";
+	genererWorks(worksAppart);
+});
+
+//Filtre Hotels & restaurants
+
+const filtreHotels= document.querySelector(".filtreHotels");
+
+filtreHotels.addEventListener("click",function(){
+	const worksHotels = worksArchitect.filter(function (work){
+		return work.categoryId === 3;
+	});
+	document.querySelector(".gallery").innerHTML = "";
+	genererWorks(worksHotels);
+});
+
+//Filter tous
+const filtreTous = document.querySelector(".filtreTous");
+
+filtreTous.addEventListener("click", function(){
+	document.querySelector(".gallery").innerHTML = "";
+	genererWorks(worksArchitect);
+});
