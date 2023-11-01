@@ -32,10 +32,15 @@ function genererWorks(worksArchitect) {
 genererWorks(worksArchitect);
 
 //Filtre Objets
-
+const boutonFiltre = document.querySelectorAll(".boutonFiltre");
+console.log(boutonFiltre)
 const filtreObjets = document.querySelector(".filtreObjets");
 
 filtreObjets.addEventListener("click",function(){
+	for (let i = 0; i < boutonFiltre.length; i++) {
+		boutonFiltre[i].classList.remove("selected");
+	}
+	filtreObjets.classList.add("selected")
 	const worksObjets = worksArchitect.filter(function (work){
 		return work.categoryId === 1;
 	});
@@ -48,6 +53,10 @@ filtreObjets.addEventListener("click",function(){
 const filtreAppart = document.querySelector(".filtreAppart");
 
 filtreAppart.addEventListener("click",function(){
+	for (let i = 0; i < boutonFiltre.length; i++) {
+		boutonFiltre[i].classList.remove("selected");
+	}
+	filtreAppart.classList.add("selected")
 	const worksAppart = worksArchitect.filter(function (work){
 		return work.categoryId === 2;
 	});
@@ -60,6 +69,10 @@ filtreAppart.addEventListener("click",function(){
 const filtreHotels= document.querySelector(".filtreHotels");
 
 filtreHotels.addEventListener("click",function(){
+	for (let i = 0; i < boutonFiltre.length; i++) {
+		boutonFiltre[i].classList.remove("selected");
+	}
+	filtreHotels.classList.add("selected")
 	const worksHotels = worksArchitect.filter(function (work){
 		return work.categoryId === 3;
 	});
@@ -71,6 +84,10 @@ filtreHotels.addEventListener("click",function(){
 const filtreTous = document.querySelector(".filtreTous");
 
 filtreTous.addEventListener("click", function(){
+	for (let i = 0; i < boutonFiltre.length; i++) {
+		boutonFiltre[i].classList.remove("selected");
+	}
+	filtreTous.classList.add("selected")
 	document.querySelector(".gallery").innerHTML = "";
 	genererWorks(worksArchitect);
 });
