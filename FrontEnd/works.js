@@ -1,20 +1,22 @@
-
-
-const reponse = await fetch ("http://localhost:5678/api/works") 
-let worksArchitect = await reponse.json ()
+const reponseWorks = await fetch ("http://localhost:5678/api/works") 
+let worksArchitect = await reponseWorks.json ()
 console.log (worksArchitect)
+
+const reponseCategories = await fetch ("http://localhost:5678/api/categories") 
+let categories = await reponseCategories.json()
+console.log(categories)
 
 //Générer travaux sur page d'accueil depuis serveur
 
-function genererWorks(worksArchitect) {
-	for (let i = 0; i < worksArchitect.length; i++) {
+function genererWorks(works) {
+	for (let i = 0; i < works.length; i++) {
 
-		const work = worksArchitect[i];
+		const work = works[i];
 		// Récupération de l'élément du DOM qui accueillera les projets
 		const gallery = document.querySelector(".gallery");
 		// Création d’une balise dédiée à un projet de la gallery
 		const galleryElement = document.createElement("figure");
-		galleryElement.dataset.id = worksArchitect[i].id;
+		galleryElement.dataset.id = works[i].id;
 		// Création des balises 
 		const imageElement = document.createElement("img");
 		imageElement.src = work.imageUrl;
@@ -32,27 +34,30 @@ function genererWorks(worksArchitect) {
 genererWorks(worksArchitect);
 
 
-//Générer un set regroupant toutes les catégories existantes dans les travaux
+//Générer un set regroupant toutes les catégories existantes depuis les travaux
 const setCategories = new Set();
 
-function genererCategories (worksArchitect) {
-for (let i = 0; i < worksArchitect.length; i++) {
-	const workCategorie = worksArchitect[i].category.name
+function genererCategories (categories) {
+for (let i = 0; i < categories.length; i++) {
+	const workCategorie = worksArchitect[i].category
 	setCategories.add(workCategorie);
 }}
-genererCategories(worksArchitect)
+genererCategories(categories)
 console.log(setCategories)
 console.log(setCategories.size)
 
-//Générer les filtres correspondant aux catégories de travaux
+//Générer les boutons filtres correspondant aux catégories de travaux
 function genererFiltres (setCategories){
-	setCategories.forEach(function(value) {
-	const nomFiltre = value
+	setCategories.forEach(function(object) {
+	const nomFiltre = object.name
+	const numeroCategorie = object.id
 	console.log(nomFiltre)
+	console.log(numeroCategorie)
 	const Filtre = document.querySelector(".filtres")
 	const boutonFiltre = document.createElement("button")
 	boutonFiltre.innerText = nomFiltre
-	boutonFiltre.classList=`boutonFiltre ${nomFiltre}`
+	boutonFiltre.classList=`boutonFiltre ${nomFiltre} ${numeroCategorie}`
+	boutonFiltre.id=`${nomFiltre}`
 	Filtre.appendChild(boutonFiltre)
 	})
 }
@@ -62,60 +67,28 @@ genererFiltres(setCategories)
 //Filtre Objets
 const listeFiltre = document.querySelectorAll(".boutonFiltre");
 console.log(listeFiltre)
-const filtreObjets = document.querySelector(".Objets");
+let worksFiltres = worksArchitect
+let elementActive = document.querySelector(".tous")
 
-filtreObjets.addEventListener("click",function(){
-	for (let i = 0; i < listeFiltre.length; i++) {
-		listeFiltre[i].classList.remove("selected");
-	}
-	filtreObjets.classList.add("selected")
-	const worksObjets = worksArchitect.filter(function (work){
-		return work.categoryId === 1;
-	});
-	document.querySelector(".gallery").innerHTML = "";
-	genererWorks(worksObjets);
-});
+for (let i = 0; i < listeFiltre.length; i++) {
+		const element = listeFiltre[i]
+		element.addEventListener ("click", function(element){
+			listeFiltre.forEach(item => {
+				item.classList.remove("selected")
+			});
+				elementActive = element.target
+				console.log(element)
+				console.log(elementActive)
+			elementActive.classList.add("selected")
+			console.log(elementActive.innerText)
+			document.querySelector(".gallery").innerHTML=""
+			if (elementActive.innerText === "Tous"){
+				genererWorks(worksArchitect)
+			} else {
+			worksFiltres = worksArchitect.filter(function(work){
+			return work.category.name === elementActive.innerText})
+			console.log(worksFiltres)
+			genererWorks(worksFiltres)
+			}})};
 
-//Filtre Appartements
 
-const filtreAppart = document.querySelector(".Appartements");
-
-filtreAppart.addEventListener("click",function(){
-	for (let i = 0; i < listeFiltre.length; i++) {
-		listeFiltre[i].classList.remove("selected");
-	}
-	filtreAppart.classList.add("selected")
-	const worksAppart = worksArchitect.filter(function (work){
-		return work.categoryId === 2;
-	});
-	document.querySelector(".gallery").innerHTML = "";
-	genererWorks(worksAppart);
-});
-
-//Filtre Hotels & restaurants
-
-const filtreHotels= document.querySelector(".Hotels");
-
-filtreHotels.addEventListener("click",function(){
-	for (let i = 0; i < listeFiltre.length; i++) {
-		listeFiltre[i].classList.remove("selected");
-	}
-	filtreHotels.classList.add("selected")
-	const worksHotels = worksArchitect.filter(function (work){
-		return work.categoryId === 3;
-	});
-	document.querySelector(".gallery").innerHTML = "";
-	genererWorks(worksHotels);
-});
-
-//Filtre tous
-const filtreTous = document.querySelector(".filtreTous");
-
-filtreTous.addEventListener("click", function(){
-	for (let i = 0; i < listeFiltre.length; i++) {
-		listeFiltre[i].classList.remove("selected");
-	}
-	filtreTous.classList.add("selected")
-	document.querySelector(".gallery").innerHTML = "";
-	genererWorks(worksArchitect);
-});
