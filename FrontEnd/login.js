@@ -1,13 +1,16 @@
 let emailUser = document.getElementById('email')
 let MDPuser = document.getElementById('MDP')
-let connexionUser = false
-
 const messageErreur = document.querySelector(".messageErreur")
+const navLogout = document.querySelector(".navLogout")
+const navLogin = document.querySelector(".navLogin")
+const bandeauEdition = document.querySelector(".bandeauEdition")
+
+menuConnection ()
 
 //Vérification email et MDP sur formulaire de LogIn
 addEventListener('submit', (Event)=>{
     Event.preventDefault() 
-    fetch ("http://localhost:5678/api//users/login", {
+    fetch ("http://localhost:5678/api/users/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -20,23 +23,35 @@ addEventListener('submit', (Event)=>{
     .then( (response) => { 
         console.log (response.status)
         if (response.status === 200) {
-            connexionUser = true
-            const token = response.token
-            const userId = response.userId
-            localStorage.setItem(userId, token)
+            const responseLogin = response.json ()
+            console.log(responseLogin)
+            window.sessionStorage.setItem("connexionUser","true")
+            menuConnection ()
             window.location.href="index.html"
         }
         else {
-            messageErreur.innerText = "Erreur Email et/ou Mot de Passe" 
-        } })
-    
-    console.log(emailUser.value)
-    console.log(MDPuser.value)
-    
+            messageErreur.innerText = "Erreur dans l’identifiant ou le mot de passe"            
+        } })    
+    })
+
+//Affichage menu logIn / logOut
+function menuConnection () {
+const connexionUser = window.sessionStorage.getItem("connexionUser")
+if (connexionUser=== "true"){
+	navLogin.classList.add("objetCache")
+	navLogout.classList.remove("objetCache")
+    bandeauEdition.classList.remove("objetCache")
+	} else {
+    navLogin.classList.remove("objetCache")
+    navLogout.classList.add("objetCache") 
+    bandeauEdition.classList.add("objetCache")   
     }
-)
+}
 
-
-
-
-
+//Déconnection
+navLogout.addEventListener ("click", function (event){
+    event.preventDefault()
+    window.sessionStorage.removeItem("connexionUser")
+    console.log(window.sessionStorage.getItem("connexionUser"))
+    menuConnection ()
+})

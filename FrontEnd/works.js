@@ -90,3 +90,4 @@ for (let i = 0; i < listeFiltre.length; i++) {
 			console.log(worksFiltres)
 			genererWorks(worksFiltres)
 			}})};
+
