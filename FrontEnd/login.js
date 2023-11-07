@@ -1,21 +1,42 @@
-let emailForm = document.getElementById('email').value
-let passwordForm = document.getElementById('MDP').value
-const formLogin = document.getElementById('submitForm')
+let emailUser = document.getElementById('email')
+let MDPuser = document.getElementById('MDP')
+let connexionUser = false
 
-addEventListener("submit", (Event) => {
-	Event.preventDefault()
-	console.log(emailForm)
-	console.log(passwordForm)
-    const login = "http://localhost:5678/api/users/login"
-    fetch(login,{
-        method: "post",
-        body: JSON.stringify({
-            email : emailForm,
-            password : passwordForm,
+const messageErreur = document.querySelector(".messageErreur")
+
+//Vérification email et MDP sur formulaire de LogIn
+addEventListener('submit', (Event)=>{
+    Event.preventDefault() 
+    fetch ("http://localhost:5678/api//users/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: emailUser.value,
+            password: MDPuser.value,
         })
     })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((err) => {
-      console.log(err)})
-})
+    .then( (response) => { 
+        console.log (response.status)
+        if (response.status === 200) {
+            connexionUser = true
+            const token = response.token
+            const userId = response.userId
+            localStorage.setItem(userId, token)
+            window.location.href="index.html"
+        }
+        else {
+            messageErreur.innerText = "Erreur Email et/ou Mot de Passe" 
+        } })
+    
+    console.log(emailUser.value)
+    console.log(MDPuser.value)
+    
+    }
+)
+
+
+
+
+

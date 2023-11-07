@@ -33,7 +33,6 @@ function genererWorks(works) {
 
 genererWorks(worksArchitect);
 
-
 //Générer un set regroupant toutes les catégories existantes depuis les travaux
 const setCategories = new Set();
 
@@ -64,7 +63,8 @@ function genererFiltres (setCategories){
 
 genererFiltres(setCategories)
 
-//Filtre Objets
+//Filtres par catégories 
+
 const listeFiltre = document.querySelectorAll(".boutonFiltre");
 console.log(listeFiltre)
 let worksFiltres = worksArchitect
@@ -90,8 +90,3 @@ for (let i = 0; i < listeFiltre.length; i++) {
 			console.log(worksFiltres)
 			genererWorks(worksFiltres)
 			}})};
-
-		
-
-
-

@@ -240,3 +240,12 @@ padding: 5px;
 	line-height: normal;
 	text-decoration-line: underline;
 }
+
+.messageErreur {
+	color: #a52222;
+	font-family: Work Sans;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 1000;
+	line-height: normal;
+}
