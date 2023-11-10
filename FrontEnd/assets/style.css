@@ -62,9 +62,9 @@ a{
 
 header {
 	display: flex;
-	flex-direction: column;
 	justify-content: space-between;
-	margin: 50px 0;
+	width: auto;
+	margin-top: 38px;
 }
 
 section {
@@ -133,6 +133,7 @@ li:hover {
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
+	margin-left: 40%;
 }
 .gallery {
 	width: 100%;
@@ -255,7 +256,11 @@ padding: 5px;
 	display: none;
 }
 
-.bandeauEdition{
+.bandeauNoir{
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	gap: 21px;
 	background: #000;
 	width: 100%;
 	height: 59px;
@@ -267,4 +272,39 @@ padding: 5px;
 	font-style: normal;
 	font-weight: 400;
 	line-height: normal;
+}
+
+.fa-pen-to-square{
+	color: #FFF;
+	width: 15.58px;
+	height: 15.58px;
+	flex-shrink: 0;
+}
+
+.fa-modifier{
+	color: #000;
+}
+
+.textModifier{
+	color: #000;
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+
+.modifier{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 1.5em;
+	gap : 5px;
+}
+
+.MesProjets{
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
 }

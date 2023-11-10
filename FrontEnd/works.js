@@ -1,3 +1,43 @@
+//email: sophie.bluel@test.tld
+//password: S0phie
+const navLogout = document.querySelector(".navLogout")
+const navLogin = document.querySelector(".navLogin")
+const bandeauEdition = document.querySelector(".bandeauEdition")
+const filtre = document.querySelector(".filtres")
+const famodifier = document.querySelector(".fa-modifier")
+const textModifier = document.querySelector(".textModifier")
+
+//Affichage menu logIn / logOut
+function menuConnection(){
+	let token = window.sessionStorage.getItem("token")
+	console.log(token)
+	if (token != null){
+		navLogin.classList.add("objetCache")
+		navLogout.classList.remove("objetCache")
+		bandeauEdition.classList.remove("objetCache")
+		filtre.classList.add("objetCache")
+		famodifier.classList.remove("objetCache")
+		textModifier.classList.remove("objetCache")
+		} else {
+		navLogin.classList.remove("objetCache")
+		navLogout.classList.add("objetCache") 
+		bandeauEdition.classList.add("objetCache")
+		filtre.classList.remove("objetCache")
+		famodifier.classList.add("objetCache")
+		textModifier.classList.add("objetCache")
+		}}
+	
+menuConnection()
+	
+	//Déconnection
+	navLogout.addEventListener ("click", function (event){
+		event.preventDefault()
+		window.sessionStorage.removeItem("token")
+		console.log(window.sessionStorage.getItem("token"))
+		menuConnection()
+	})
+
+
 const reponseWorks = await fetch ("http://localhost:5678/api/works") 
 let worksArchitect = await reponseWorks.json ()
 console.log (worksArchitect)
@@ -52,12 +92,11 @@ function genererFiltres (setCategories){
 	const numeroCategorie = object.id
 	console.log(nomFiltre)
 	console.log(numeroCategorie)
-	const Filtre = document.querySelector(".filtres")
 	const boutonFiltre = document.createElement("button")
 	boutonFiltre.innerText = nomFiltre
 	boutonFiltre.classList=`boutonFiltre ${nomFiltre} ${numeroCategorie}`
 	boutonFiltre.id=`${nomFiltre}`
-	Filtre.appendChild(boutonFiltre)
+	filtre.appendChild(boutonFiltre)
 	})
 }
 
@@ -90,4 +129,3 @@ for (let i = 0; i < listeFiltre.length; i++) {
 			console.log(worksFiltres)
 			genererWorks(worksFiltres)
 			}})};
-

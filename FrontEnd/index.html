@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://kit.fontawesome.com/1683b7437f.js" crossorigin="anonymous"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
@@ -13,18 +14,25 @@
 	<script type="module" src="login.js"></script>
 </head>
 <body>
+	<div class="objetCache bandeauEdition">
+		<div class ="bandeauNoir"> 
+			<i class="fa-regular fa-pen-to-square"></i>
+			<p class="texteBandeau">Mode édition</p>
+		</div>
+	</div>
+<div>
 <header>
-	<div class ="bandeauEdition">Mode édition</div>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
 			<li class="navLogin"> <a href=login.html class="nav">login</a></li>
-			<li class="objetCache navLogout">logout</li>
+			<li class="navLogout">logout</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
+</div>
 </header>
 <main>
 	<section id="introduction">
@@ -39,8 +47,14 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="filtres">
+		<div class="MesProjets">
+			<h2>Mes Projets</h2>
+			<div class="modifier">
+			<i class="fa-regular fa-pen-to-square fa-modifier objetCache"></i>
+			<p class="textModifier objetCache"> modifier </p>
+		</div>
+	</div>
+		<div class="filtres affichageFiltre">
 		<button class="filtreTous boutonFiltre">Tous</button>
 		</div>
 		<div class="gallery">
@@ -68,5 +82,6 @@
 		</ul>
 	</nav>
 </footer>
+</div>
 </body>
 </html>
