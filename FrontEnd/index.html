@@ -11,9 +11,8 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script type="module" src="works.js"></script>
-	<script type="module" src="login.js"></script>
 </head>
-<body>
+<body class="body">
 	<div class="objetCache bandeauEdition">
 		<div class ="bandeauNoir"> 
 			<i class="fa-regular fa-pen-to-square"></i>
@@ -46,13 +45,17 @@
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
 	</section>
+
+	<input type="file" id="fileInput" onchange="previewImage()">
+	<div id="previewImageContainer"></div>
+
 	<section id="portfolio">
 		<div class="MesProjets">
 			<h2>Mes Projets</h2>
-			<div class="modifier">
+			<a class="modifier" href="modal.html#modalModifier">
 			<i class="fa-regular fa-pen-to-square fa-modifier objetCache"></i>
 			<p class="textModifier objetCache"> modifier </p>
-		</div>
+			</a>
 	</div>
 		<div class="filtres affichageFiltre">
 		<button class="filtreTous boutonFiltre">Tous</button>
@@ -65,17 +68,17 @@
 		<p>Vous avez un projet ? Discutons-en !</p>
 		<form action="#" method="post">
 			<label for="name">Nom</label>
-			<input type="text" name="name" id="name">
+			<input type="text" name="name" id="name" class="input">
 			<label for="email">Email</label>
-			<input type="email" name="email" id="email">
+			<input type="email" name="email" id="email" class="input">
 			<label for="message">Message</label>
-			<textarea name="message" id="message" cols="30" rows="10"></textarea>
-			<input type="submit" value="Envoyer">
+			<textarea name="message" id="message" cols="30" rows="10" class="input"></textarea>
+			<input class="boutonSubmit" type="submit" value="Envoyer">
 		</form>
 	</section>
 </main>
 
-<footer>
+<footer class="footer">
 	<nav>
 		<ul>
 			<li>Mentions Légales</li>
@@ -84,4 +87,8 @@
 </footer>
 </div>
 </body>
+<div id="modalModifier" class="divModal objetCache">
+</div>
+<div class="objetCache divFermeture">
+</div>
 </html>

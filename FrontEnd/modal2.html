@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://kit.fontawesome.com/1683b7437f.js" crossorigin="anonymous"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<meta name="description" content="">
+	<link rel="stylesheet" href="./assets/style.css">
+</head>
+<aside id="modalAjouter" class="modalAjout modaleFormat" aria-hidden="true" role="dialog" aria-modal="false" aria-labelledby="titleModal">
+    <div class="navigationModal">
+    <i class="fa-solid fa-arrow-left retour"></i>
+    <i class="fa-solid fa-xmark fermer2"></i>
+    </div>
+    <div class="contenuModal">
+    <h3 id="titleModal">Ajout photo</h3>
+        <div class="ajoutPhoto">
+            <img class="iconePhoto" src="./assets/icons/picture-svgrepo-com 1.png" alt="Télécharger image"></i>
+            <label for="ajouterImage" class="ajouterImage">+ Ajouter photo</label>
+            <input id="ajouterImage" type="file" accept="image/png, image/jpeg" onchange="previewImage()">
+            <p class="infoImage">jpg, png : 4mo max</p>
+        </div>
+        <div id="previewImageContainer"></div>
+    <form class="formAjoutProjet" id="ajoutProjet" action="#" method="post">
+        <div class="divForm">
+            <label for="titre">Titre</label>
+			<input class="inputForm titrePhoto" type="text" name="titre" id="titre" required>
+			<label for="categorie">Catégorie</label>
+			<select class="inputForm categorie" type="select" name="categorie" id="categorie" required>
+            </select>
+        </div>
+        <input class="boutonValiderAjout" type="submit" value="Valider">
+    </form>
+</div>
+</aside>
+</html>

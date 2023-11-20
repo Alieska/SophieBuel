@@ -1,9 +1,10 @@
 let emailUser = document.getElementById('email')
 let MDPuser = document.getElementById('MDP')
 const messageErreur = document.querySelector(".messageErreur")
+const submitLogin = document.querySelector(".submitLogin")
 
 //Vérification email et MDP sur formulaire de LogIn
-addEventListener('submit', (Event)=>{
+submitLogin.addEventListener('click', (Event)=>{
     Event.preventDefault() 
     fetch ("http://localhost:5678/api/users/login", {
         method: "POST",
