@@ -17,13 +17,15 @@
     </div>
     <div class="contenuModal">
     <h3 id="titleModal">Ajout photo</h3>
+    <div class="messageErreurPhotoLoad messageErreur"></div>
         <div class="ajoutPhoto">
             <img class="iconePhoto" src="./assets/icons/picture-svgrepo-com 1.png" alt="Télécharger image"></i>
-            <label for="ajouterImage" class="ajouterImage">+ Ajouter photo</label>
-            <input id="ajouterImage" type="file" accept="image/png, image/jpeg" onchange="previewImage()">
+            <label for="ajouterImage" class="ajouterImage flex">+ Ajouter photo</label>
+            <input id="ajouterImage" type="file" accept="image/png, image/jpeg">
             <p class="infoImage">jpg, png : 4mo max</p>
+            <div id="previewImageContainer" class="objetCache"></div>
         </div>
-        <div id="previewImageContainer"></div>
+        
     <form class="formAjoutProjet" id="ajoutProjet" action="#" method="post">
         <div class="divForm">
             <label for="titre">Titre</label>

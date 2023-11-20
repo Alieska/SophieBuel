@@ -1,6 +1,6 @@
 let emailUser = document.getElementById('email')
 let MDPuser = document.getElementById('MDP')
-const messageErreur = document.querySelector(".messageErreur")
+const messageErreurLogin = document.querySelector(".messageErreurLogin")
 const submitLogin = document.querySelector(".submitLogin")
 
 //Vérification email et MDP sur formulaire de LogIn
@@ -27,7 +27,7 @@ submitLogin.addEventListener('click', (Event)=>{
             window.location.href="index.html"
         }
         else {
-            messageErreur.innerText = "Erreur dans l’identifiant ou le mot de passe"            
+            messageErreurLogin.innerText = "Erreur dans l’identifiant ou le mot de passe"            
         } } ) 
     })
 

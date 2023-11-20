@@ -7,6 +7,7 @@ const filtre = document.querySelector(".filtres")
 const famodifier = document.querySelector(".fa-modifier")
 const textModifier = document.querySelector(".textModifier")
 let tokenSession = window.sessionStorage.getItem("token")
+let worksArchitect = null
 
 //Affichage menu logIn / logOut
 function menuConnection(){
@@ -41,10 +42,12 @@ menuConnection()
 		genererFiltres(setCategories)
 	})
 
-
+async function interrogerAPIWorks () {
 const reponseWorks = await fetch ("http://localhost:5678/api/works") 
-let worksArchitect = await reponseWorks.json ()
-console.log (worksArchitect)
+worksArchitect = await reponseWorks.json ()
+console.log(worksArchitect)}
+
+interrogerAPIWorks ()
 
 const reponseCategories = await fetch ("http://localhost:5678/api/categories") 
 let categories = await reponseCategories.json()
@@ -171,18 +174,19 @@ function genererMinigallery(works) {
 		
 //Modale
 const lienModifier = document.querySelector(".modifier")
-let modal = null
+let modal1 = null
 let modal2 = null
 const body = document.querySelector(".body")
 const footer = document.querySelector(".footer")
 const input = document.querySelectorAll(".input")
 const targetModal = document.getElementById("modalModifier")
 const divFermeture = document.querySelector(".divFermeture")
+let boutonSelectPhoto = null
 
 //Apparition fenêtre
 lienModifier.addEventListener ("click", async function (event){
 	event.preventDefault()
-	if (modal === null){
+	if (modal1 === null){
 	const html = await fetch("modal.html").then(response =>response.text())
 	console.log(html)
 	divFermeture.classList.remove("objetCache")
@@ -198,7 +202,7 @@ lienModifier.addEventListener ("click", async function (event){
 	element.removeAttribute('aria-hidden')
 	element.setAttribute("aria-modal", "true")
 	genererMinigallery(worksArchitect)
-	modal = targetModal
+	modal1 = document.querySelector(".modalGalerie")
 	const boutonAjouter = document.querySelector(".boutonAjouter")
 	boutonAjouter.addEventListener("click", ouvrirModal2)
 	const croixModal = document.querySelector(".fermer1")
@@ -212,6 +216,9 @@ lienModifier.addEventListener ("click", async function (event){
 	footer.classList.add("noBackground")
 	input.forEach(item => {
 		item.classList.add("noBackground")
+	modal1.setAttribute("aria-hidden","false")
+	modal1.setAttribute("aria-modal", "true")
+	modal1.classList.remove("objetCache")
 	});
 	}
 })
@@ -228,10 +235,13 @@ function fermerModal(event){
 	footer.classList.remove("noBackground")
 	input.forEach(item => {
 		item.classList.remove("noBackground")
-	})
-}
-
-
+	modal2.setAttribute("aria-hidden","true")
+	modal2.setAttribute("aria-modal", "false")
+	modal2.classList.add("objetCache")
+	modal1.setAttribute("aria-hidden","true")
+	modal1.setAttribute("aria-modal", "false")
+	modal1.classList.add("objetCache")
+	})}
 
 //Suppression élément galerie
 function suppWork (event) {
@@ -264,20 +274,38 @@ function suppWork (event) {
 //Ouvrir modale Ajouter photo
 async function ouvrirModal2(event, targetModal) {
 		event.preventDefault()
+		const modal1 = document.querySelector(".modalGalerie")
+		if (modal2 === null) {
 		const html2 = await fetch("modal2.html").then(response =>response.text())
 		console.log(html2)
 		const element = document.createRange().createContextualFragment(html2).querySelector(".modalAjout")
-		const modalActive = document.querySelector(".modalGalerie")
-		modalActive.setAttribute("aria-hidden","true")
-		modalActive.setAttribute("aria-modal", "false")
-		modalActive.classList.add("objetCache")
-		console.log(modalActive)
+		modal1.setAttribute("aria-hidden","true")
+		modal1.setAttribute("aria-modal", "false")
+		modal1.classList.add("objetCache")
+		console.log(modal1)
 		targetModal = document.querySelector(".divModal")
 		targetModal.appendChild(element)
 		genererSelect(categories)
+		modal2 = document.querySelector(".modalAjout")
+		boutonSelectPhoto = document.getElementById("ajouterImage")
+		boutonSelectPhoto.addEventListener("change", previewImage)
+		console.log(boutonSelectPhoto)
 		let boutonValiderAjout = document.querySelector(".boutonValiderAjout")
-		boutonValiderAjout.addEventListener("click", ajoutPhoto(event))
-}
+		boutonValiderAjout.addEventListener("click", ajoutPhoto)
+		console.log(boutonValiderAjout)
+		let boutonRetour = document.querySelector(".retour")
+		boutonRetour.addEventListener("click", retourModal1)
+		console.log(boutonRetour)
+		const croixModal = document.querySelector(".fermer2")
+		croixModal.addEventListener("click", fermerModal)}
+		else{
+			modal1.setAttribute("aria-hidden","true")
+			modal1.setAttribute("aria-modal", "false")
+			modal1.classList.add("objetCache")
+			modal2.setAttribute("aria-hidden","false")
+			modal2.setAttribute("aria-modal", "true")
+			modal2.classList.remove("objetCache")
+		}}
 
 //Catégories pour modale ajout photo
 function genererSelect (categories){
@@ -287,70 +315,114 @@ function genererSelect (categories){
 	console.log(nomOption)
 	const option = document.createElement("option")
 	option.innerText = nomOption
-	option.value=`${nomOption}`
+	option.value=object.id
 	categorieSelect.appendChild(option)
-		})
+		})}
+
+//Retour modale 1 (suppression projets)
+function retourModal1(){
+	const modal1 = document.querySelector(".modalGalerie")
+	const modal2 = document.querySelector(".modalAjout")
+		console.log(modal1)
+		console.log(modal2)
+		modal1.removeAttribute("aria-hidden")
+		modal1.setAttribute("aria-modal", "true")
+		modal1.classList.remove("objetCache")
+		modal2.setAttribute("aria-hidden","true")
+		modal2.setAttribute("aria-modal", "false")
+		modal2.classList.add("objetCache")
+		resetModal2()
 }
 
+//Reset Modal2
+function resetModal2 () {
+	const imagePreviewContainer = document.getElementById('previewImageContainer')
+	imagePreviewContainer.classList.add("objetCache")
+	const iconePhoto = document.querySelector(".iconePhoto")
+   	iconePhoto.classList.remove("objetCache")
+	const ajouterImageLabel = document.querySelector(".ajouterImage")
+	ajouterImageLabel.classList.remove("objetCache")
+	ajouterImageLabel.classList.add("flex")
+   	ajouterImage.classList.remove("objetCache")
+	const infoImage = document.querySelector(".infoImage")
+	infoImage.classList.remove("objetCache")
+	document.querySelector(".titrePhoto").value = ""
+}
 
  // Afficher miniature
- function previewImage() {
-	const fileInput = document.getElementById('fileInput');
-	const file = fileInput.files[0];
+	function previewImage(event) {
+	const messageErreurPhotoLoad = document.querySelector(".messageErreurPhotoLoad")
+	const file = boutonSelectPhoto.files[0];
+	console.log(file)
+	console.log(file.size)
 	const imagePreviewContainer = document.getElementById('previewImageContainer');
-	
-	if(file.type.match('image.*')){
-	  const reader = new FileReader();
+	if(file.size > 4194304){
+		messageErreurPhotoLoad.innerText = "Choisir une photo de 4mo max"
+	}else{
+	if(file.type.match('image/png')||file.type.match('image/jpeg')){
+		messageErreurPhotoLoad.innerText = ""
+	 	const reader = new FileReader();
 	  
-	  reader.addEventListener('load', function (event) {
+	  	reader.addEventListener('load', function (event) {
 		const imageUrl = event.target.result;
 		const image = new Image();
 		
 		image.addEventListener('load', function() {
 		  imagePreviewContainer.innerHTML = ''; // Vider le conteneur au cas où il y aurait déjà des images.
-		  imagePreviewContainer.appendChild(image);
+		 imagePreviewContainer.appendChild(image);
 		});
 		
 		image.src = imageUrl;
-		image.style.width = '200px'; // Indiquez les dimensions souhaitées ici.
-		image.style.height = 'auto'; // Vous pouvez également utiliser "px" si vous voulez spécifier une hauteur.
+		image.style.width = '129px'; 
+		image.style.height = '169px';
 	  });
 	  
 	  reader.readAsDataURL(file);
-	}
-  }
+	  imagePreviewContainer.classList.remove("objetCache")
+	  const iconePhoto = document.querySelector(".iconePhoto")
+	  iconePhoto.classList.add("objetCache")
+	  const ajouterImageLabel = document.querySelector(".ajouterImage")
+	  ajouterImageLabel.classList.add("objetCache")
+	  ajouterImageLabel.classList.remove("flex")
+	  ajouterImage.classList.add("objetCache")
+	  const infoImage = document.querySelector(".infoImage")
+	  infoImage.classList.add("objetCache")
+	}else{
+		messageErreurPhotoLoad.innerText = "Choisir un fichier de type png ou jpg"
+	}}}
  
 
 //Ajout photo
 function ajoutPhoto(event) {
 	event.preventDefault()
 	tokenSession = window.sessionStorage.getItem("token")
-	let photo = document.getElementById("ajouterImage").value
+	const file = boutonSelectPhoto.files[0];
 	let titrePhoto = document.querySelector(".titrePhoto").value
 	let categoriePhoto = document.querySelector(".categorie").value
 	console.log(tokenSession)
 	console.log(titrePhoto)
 	console.log(categoriePhoto)
-	console.log(photo)
- 
-  } 
-	//fetch (`http://localhost:5678/api/works`, {
-     //   method: "POST",
-		//headers: {Authorization: `Bearer ${tokenSession}`,
-	//	Content-type: "application/json; charset=UTF-8"},
-	//	body: JSON.stringify({
-	//		image: photo,
-	//		title: titrePhoto,
-	//		category: categoriePhoto
-	//	})
-   // })
-  //  .then (async (response) => { 
-    //    console.log (response)
-   //     if (response.status === 200) {
-    //        const responseAJout = await response.json ()
-//console.log(responseAJout)
-	//		genererMinigallery(worksArchitect)
-   //     } else {
-	//		console.log(response.status)
-	//	}
-	//	})}}
+	const formData = new FormData()
+	formData.append("image", file);
+	formData.append("title", titrePhoto);
+	formData.append("category", categoriePhoto);
+	console.log(formData)
+	fetch (`http://localhost:5678/api/works/`, {
+    	method: "POST",
+		headers: {"Authorization": `Bearer ${tokenSession}`},
+		body: formData,
+   		})
+    .then (async (response) => { 
+      console.log (response)
+       if (response.status === 201) {
+          const responseAjout = await response.json ()
+			console.log(responseAjout)
+			interrogerAPIWorks()
+			genererMinigallery(worksArchitect)
+			genererWorks(worksArchitect)
+     } else {
+		console.log(response.status)
+		}
+		})}
+  
+	
