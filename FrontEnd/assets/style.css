@@ -181,7 +181,7 @@ select{
 	background-color: white;
 }
 
-#contact label ,#login label,#ajoutProjet label{
+#contact label ,#login label,#ajoutProjet label:not(.ajouterImage) {
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
@@ -250,6 +250,15 @@ padding: 5px;
 
 .messageErreur {
 	color: #a52222;
+	font-family: Work Sans;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 1000;
+	line-height: normal;
+}
+
+.messageOK{
+	color: #0f611b;
 	font-family: Work Sans;
 	font-size: 20px;
 	font-style: normal;
@@ -469,7 +478,7 @@ padding: 5px;
 	height: 76px;
 	flex-shrink: 0;
 	color: #b9c5cc;
-	margin-top: 13px;
+	margin-top: 23px;
 	margin-bottom: 6px;
 }
 
@@ -488,6 +497,7 @@ padding: 5px;
 	font-style: normal;
 	font-weight: 500;
 	line-height: normal;
+	margin-top : 6px;
 }
 
 .flex{
@@ -519,14 +529,19 @@ padding: 5px;
 .boutonValiderAjout{
 	width: 237px;
 	height: 36px;
-	background-color: #A7A7A7;
 	font-size: 14px;
 	font-family: 'Syne';
 	font-weight: 700;
-	color: white;
 	margin : 2em auto ;
 	text-align: center;
 	border-radius: 60px ;
+	color: white;
+	background-color: #1D6154;
+}
+
+:disabled {
+color: white;
+background-color: #A7A7A7;
 }
 
 .divForm{

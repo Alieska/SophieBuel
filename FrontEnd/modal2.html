@@ -18,6 +18,7 @@
     <div class="contenuModal">
     <h3 id="titleModal">Ajout photo</h3>
     <div class="messageErreurPhotoLoad messageErreur"></div>
+    <form class="formAjoutProjet" id="ajoutProjet" action="#" method="post">
         <div class="ajoutPhoto">
             <img class="iconePhoto" src="./assets/icons/picture-svgrepo-com 1.png" alt="Télécharger image"></i>
             <label for="ajouterImage" class="ajouterImage flex">+ Ajouter photo</label>
@@ -25,8 +26,6 @@
             <p class="infoImage">jpg, png : 4mo max</p>
             <div id="previewImageContainer" class="objetCache"></div>
         </div>
-        
-    <form class="formAjoutProjet" id="ajoutProjet" action="#" method="post">
         <div class="divForm">
             <label for="titre">Titre</label>
 			<input class="inputForm titrePhoto" type="text" name="titre" id="titre" required>
@@ -34,7 +33,7 @@
 			<select class="inputForm categorie" type="select" name="categorie" id="categorie" required>
             </select>
         </div>
-        <input class="boutonValiderAjout" type="submit" value="Valider">
+        <input class="boutonValiderAjout" type="submit" value="Valider" disabled="true">
     </form>
 </div>
 </aside>
