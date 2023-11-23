@@ -163,9 +163,16 @@ margin: auto;
 #contact h2,#login h2{
 	margin-bottom: 20px;
 }
-#contact form ,#login form{
+#contact form {
 	text-align: left;
 	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+
+#login form{
+	text-align: left;
+	margin-top:10px;
 	display: flex;
 	flex-direction: column;
 }
@@ -255,6 +262,7 @@ padding: 5px;
 	font-style: normal;
 	font-weight: 1000;
 	line-height: normal;
+	height: 20px;
 }
 
 .messageOK{
@@ -390,6 +398,18 @@ padding: 5px;
 	line-height: normal;
 }
 
+#titleModal2{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #000;
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+
 .mini-gallery{
 	padding-bottom: 67px;
 	width: 420px;
@@ -448,7 +468,7 @@ padding: 5px;
 	z-index: 2;
 	position: absolute;
 	top : 60%;
-	left: 25%;
+	left: 31%;
 }
 
 .divFermeture{
@@ -458,6 +478,16 @@ padding: 5px;
 	left: 0;
 	width: 100%;
 	height: 100%;
+}
+
+.espaceCliquableAjoutImage{
+	z-index: 3;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	visibility:visible;
 }
 
 .ajoutPhoto{
@@ -471,6 +501,7 @@ padding: 5px;
 	flex-shrink: 0;
 	border-radius: 3px;
 	background: #E8F1F6;
+	position: relative;
 }
 
 .iconePhoto{
@@ -502,6 +533,12 @@ padding: 5px;
 
 .flex{
 	display:flex;
+}
+
+.opacity0{
+	opacity: 0;
+	width: 0;
+	height: 0;       ;
 }
 
 #ajouterImage{

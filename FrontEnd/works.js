@@ -8,6 +8,7 @@ const famodifier = document.querySelector(".fa-modifier")
 const textModifier = document.querySelector(".textModifier")
 let tokenSession = window.sessionStorage.getItem("token")
 let worksArchitect = null
+let categories = null
 
 //Affichage menu logIn / logOut
 function menuConnection(){
@@ -31,8 +32,6 @@ function menuConnection(){
 		}
 	}
 	
-menuConnection()
-	
 	//Déconnection
 	navLogout.addEventListener ("click", function (event){
 		event.preventDefault()
@@ -49,11 +48,11 @@ worksArchitect = await reponseWorks.json ()
 console.log(worksArchitect)
 return worksArchitect}
 
-interrogerAPIWorks ()
-
+async function interrogerAPICategories () {
 const reponseCategories = await fetch ("http://localhost:5678/api/categories") 
-let categories = await reponseCategories.json()
+categories = await reponseCategories.json()
 console.log(categories)
+return categories}
 
 
 //Générer travaux sur page d'accueil depuis serveur
@@ -82,9 +81,6 @@ function genererWorks(works) {
 
 }
 
-
-genererWorks(worksArchitect);
-
 //Générer un set regroupant toutes les catégories existantes depuis les travaux
 const setCategories = new Set();
 
@@ -93,8 +89,6 @@ for (let i = 0; i < categories.length; i++) {
 	const workCategorie = worksArchitect[i].category
 	setCategories.add(workCategorie);
 }}
-
-genererCategories(categories)
 
 //Générer les boutons filtres correspondant aux catégories de travaux
 function genererFiltres (categories, boutonsExistant){
@@ -111,17 +105,31 @@ function genererFiltres (categories, boutonsExistant){
 	boutonFiltre.id=`${nomFiltre}`
 	filtre.appendChild(boutonFiltre)
 	console.log("Filtres générés")
+	activerFiltres(worksArchitect)
 	})
 }
 
-genererFiltres(categories)
+// Initialisation galerie page accueil
+function galerieAccueil () {
+	interrogerAPIWorks()
+.then (worksArchitect => {
+	genererWorks(worksArchitect)})
+	interrogerAPICategories()
+.then (categories  => {
+	genererCategories(categories)
+	genererFiltres(categories)
+	})
+}
+
+// Chargement page accueil
+menuConnection()
+galerieAccueil()
 
 //Filtres par catégories 
-
-const listeFiltre = document.querySelectorAll(".boutonFiltre");
-let worksFiltres = worksArchitect
-let elementActive = document.querySelector(".tous")
-
+function activerFiltres(worksArchitect) {
+	const listeFiltre = document.querySelectorAll(".boutonFiltre");
+	let worksFiltres = worksArchitect
+	let elementActive = document.querySelector(".tous")
 for (let i = 0; i < listeFiltre.length; i++) {
 		const element = listeFiltre[i]
 		element.addEventListener ("click", function(element){
@@ -137,7 +145,9 @@ for (let i = 0; i < listeFiltre.length; i++) {
 				worksFiltres = worksArchitect.filter(function(work){
 				return work.category.name === elementActive.innerText})
 				genererWorks(worksFiltres)
-			}})};
+			}})}}
+
+
 
 // Générer galerie modale
 function genererMinigallery(works) {
@@ -284,7 +294,7 @@ async function ouvrirModal2(event, targetModal) {
 		const croixModal = document.querySelector(".fermer2")
 		croixModal.addEventListener("click", fermerModal)
 		let champTitrePhoto = document.querySelector(".titrePhoto")
-		champTitrePhoto.addEventListener("keyup",testForm) 
+		champTitrePhoto.addEventListener("input",testForm) 
 		} else{
 			modal1.setAttribute("aria-hidden","true")
 			modal1.setAttribute("aria-modal", "false")
@@ -339,12 +349,13 @@ function resetModal2 () {
 	const iconePhoto = document.querySelector(".iconePhoto")
    	iconePhoto.classList.remove("objetCache")
 	const ajouterImageLabel = document.querySelector(".ajouterImage")
-	ajouterImageLabel.classList.remove("objetCache")
+	ajouterImageLabel.classList.remove("opacity0")
 	ajouterImageLabel.classList.add("flex")
    	ajouterImage.classList.remove("objetCache")
 	const infoImage = document.querySelector(".infoImage")
 	infoImage.classList.remove("objetCache")
 	document.querySelector(".formAjoutProjet").reset()
+	testForm()
 }
 
  // Afficher miniature
@@ -375,9 +386,8 @@ function resetModal2 () {
 	  const iconePhoto = document.querySelector(".iconePhoto")
 	  iconePhoto.classList.add("objetCache")
 	  const ajouterImageLabel = document.querySelector(".ajouterImage")
-	  ajouterImageLabel.classList.add("objetCache")
+	  ajouterImageLabel.classList.add("opacity0")
 	  ajouterImageLabel.classList.remove("flex")
-	  ajouterImage.classList.add("objetCache")
 	  const infoImage = document.querySelector(".infoImage")
 	  infoImage.classList.add("objetCache")
 	}else{
@@ -422,11 +432,19 @@ function ajoutPhoto(event) {
 			MAJGaleries ()
 			messageErreurPhotoLoad.innerText = "Photo ajoutée"
 			messageErreurPhotoLoad.classList.add("messageOK")
+			setTimeout(resetMessage, 3000)
 			resetModal2()
      } else {
 		console.log(response.status)
 		}
 		})}}}
+
+	//Reset message photo ajoutée
+	function resetMessage () {
+		let messageErreurPhotoLoad = document.querySelector(".messageErreurPhotoLoad")
+		messageErreurPhotoLoad.innerText = ""
+		messageErreurPhotoLoad.classList.remove("messageOK")
+	}
   
 	// MAJ galerie page accueil + mini-galerie modale
 		function MAJGaleries () {
