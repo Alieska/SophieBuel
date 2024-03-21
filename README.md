@@ -1,8 +1,13 @@
-# Portfolio-architecte-sophie-bluel
+# Créez une page web dynamique avec JavaScript
 
-Code du projet 6 d'intégrateur web.
+Site internet d'une architecte d'intérieur: Sophie Bluel. Le code du backend était fourni. 
+Utilisation du HTML, CSS et Javascript pour rendre la page dynamique:
+- Messages d'erreur
+- Modales
+- Page différente si utilisateur connecté
 
-## Information pour le lancer le code
+## Informations pour lancer le code:
 
- - Lancer le backend depuis votre terminal en suivant les instruction du fichier ReadMe.
+ - Lancer le backend depuis votre terminal en suivant les instructions du fichier ReadMe.
+ - Lancer le frontend depuis votre terminal en suivant les instructions du fichier ReadMe.
  - Si vous désirez afficher le code du backend et du frontend, faites le dans 2 instances de VSCode différentes pour éviter tout problème
